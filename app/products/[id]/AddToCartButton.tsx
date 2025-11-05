@@ -1,8 +1,10 @@
 'use client';
 
 import { useState } from 'react';
+import { usePostHog } from 'posthog-js/react';
 
 export default function AddToCartButton({ product }: { product: any }) {
+  const posthog = usePostHog();
   const [quantity, setQuantity] = useState(1);
   const [isAdding, setIsAdding] = useState(false);
   const [message, setMessage] = useState('');
@@ -24,6 +26,15 @@ export default function AddToCartButton({ product }: { product: any }) {
       });
 
       if (response.ok) {
+        // Track add to cart event
+        posthog.capture('add_to_cart', {
+          product_id: product.id,
+          product_name: product.name,
+          product_price: product.price,
+          quantity: quantity,
+          total_price: product.price * quantity,
+        });
+
         setMessage('Added to cart!');
         setTimeout(() => setMessage(''), 3000);
       } else {

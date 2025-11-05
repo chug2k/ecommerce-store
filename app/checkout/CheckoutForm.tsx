@@ -2,9 +2,11 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { usePostHog } from 'posthog-js/react';
 
 export default function CheckoutForm({ total }: { total: number }) {
   const router = useRouter();
+  const posthog = usePostHog();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     fullName: '',
@@ -21,6 +23,13 @@ export default function CheckoutForm({ total }: { total: number }) {
 
     // Simulate payment processing
     await new Promise((resolve) => setTimeout(resolve, 1500));
+
+    // Track order completion
+    posthog.capture('order_completed', {
+      total: total,
+      customer_email: formData.email,
+      customer_name: formData.fullName,
+    });
 
     // Clear cart and redirect to confirmation
     router.push('/checkout/confirmation');
