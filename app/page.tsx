@@ -1,6 +1,9 @@
 import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
 
+// Disable caching for real-time product updates
+export const revalidate = 0;
+
 async function getProducts() {
   const { data: products, error } = await supabase
     .from('products')

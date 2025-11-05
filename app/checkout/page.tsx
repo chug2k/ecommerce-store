@@ -3,6 +3,9 @@ import { cookies } from 'next/headers';
 import CheckoutForm from './CheckoutForm';
 import { redirect } from 'next/navigation';
 
+// Disable caching for real-time cart updates
+export const revalidate = 0;
+
 async function getCartItems() {
   const cookieStore = await cookies();
   const sessionId = cookieStore.get('session_id')?.value;

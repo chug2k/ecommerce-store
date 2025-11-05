@@ -2,6 +2,9 @@ import { supabase } from '@/lib/supabase';
 import { notFound } from 'next/navigation';
 import AddToCartButton from './AddToCartButton';
 
+// Disable caching for real-time stock updates
+export const revalidate = 0;
+
 async function getProduct(id: string) {
   const { data: product, error } = await supabase
     .from('products')
