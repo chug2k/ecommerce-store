@@ -1,6 +1,7 @@
 import { supabase } from '@/lib/supabase';
 import { notFound } from 'next/navigation';
 import AddToCartButton from './AddToCartButton';
+import ProductViewTracker from './ProductViewTracker';
 
 // Disable caching for real-time stock updates
 export const revalidate = 0;
@@ -32,6 +33,7 @@ export default async function ProductPage({
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <ProductViewTracker product={product} />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Product Image */}
         <div className="aspect-square bg-gray-200 rounded-lg overflow-hidden">

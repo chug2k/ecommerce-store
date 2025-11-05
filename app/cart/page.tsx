@@ -1,6 +1,7 @@
 import { supabase } from '@/lib/supabase';
 import { cookies } from 'next/headers';
 import CartClient from './CartClient';
+import CartViewTracker from './CartViewTracker';
 
 // Disable caching for real-time cart updates
 export const revalidate = 0;
@@ -31,6 +32,7 @@ export default async function CartPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {items.length > 0 && <CartViewTracker items={items} />}
       <h1 className="text-3xl font-bold text-gray-900 mb-8">Shopping Cart</h1>
 
       {items.length === 0 ? (

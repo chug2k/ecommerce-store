@@ -2,6 +2,7 @@ import { supabase } from '@/lib/supabase';
 import { cookies } from 'next/headers';
 import CheckoutForm from './CheckoutForm';
 import { redirect } from 'next/navigation';
+import CheckoutStartedTracker from './CheckoutStartedTracker';
 
 // Disable caching for real-time cart updates
 export const revalidate = 0;
@@ -43,6 +44,7 @@ export default async function CheckoutPage() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <CheckoutStartedTracker items={items} total={total} />
       <h1 className="text-3xl font-bold text-gray-900 mb-8">Checkout</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
